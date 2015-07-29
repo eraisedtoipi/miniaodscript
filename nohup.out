@@ -1,0 +1,45 @@
+now at /build/peerutb/CMSSW_7_4_6/src/MiniAODPerformanceStudies
+basketSize
+basketSize_131072
+checkMem_basketSize_131072.log
+basketSize_2048
+checkMem_basketSize_2048.log
+basketSize_262144
+checkMem_basketSize_262144.log
+basketSize_32768
+checkMem_basketSize_32768.log
+basketSize_4096
+grep: /proc/21378/status: No such file or directory
+checkMem_basketSize_4096.log
+Traceback (most recent call last):
+  File "checkMem.py", line 99, in <module>
+    main(sys.argv[1:])
+  File "checkMem.py", line 67, in main
+    mems.append(float(mem.strip().split()[1]))
+IndexError: list index out of range
+basketSize_65536
+checkMem_basketSize_65536.log
+basketSize_8192
+checkMem_basketSize_8192.log
+testdir
+checkMem_testdir.log
+compressionAlgorLevel
+LZMA2
+checkMem_LZMA2.log
+LZMA7
+checkMem_LZMA7.log
+Traceback (most recent call last):
+  File "checkMem.py", line 99, in <module>
+    main(sys.argv[1:])
+  File "checkMem.py", line 67, in main
+    mems.append(float(mem.strip().split()[1]))
+IndexError: list index out of range
+ZLIB2
+checkMem_ZLIB2.log
+ZLIB4
+checkMem_ZLIB4.log
+ZLIB7
+checkMem_ZLIB7.log
+/build/peerutb/CMSSW_7_4_6/src/MiniAODPerformanceStudies
+Error: basketSize is not a directory
+Error: basketSize is not a directory

@@ -1,0 +1,109 @@
+Start time: Wed Jul 29 01:06:47 CEST 2015
+MEMORY PROFILE
+Now processing (1/28)
+Omitting directory "#autoFlush/autoFlushLess/"
+Finished processing (1/28)
+Now processing (2/28)
+Omitting directory "#autoFlush/autoFlushLess2/"
+Finished processing (2/28)
+Now processing (3/28)
+Omitting directory "#autoFlush/autoFlushMore/"
+Finished processing (3/28)
+Now processing (4/28)
+Omitting directory "#autoFlush/autoFlushMore2/"
+Finished processing (4/28)
+Now processing (5/28)
+checkMem_basketSize_1048576.log
+/build/peerutb/CMSSW_7_4_6/src/MiniAODPerformanceStudies/basketSize/basketSize_1048576
+Finished processing (5/28)
+Now processing (6/28)
+checkMem_basketSize_131072.log
+/build/peerutb/CMSSW_7_4_6/src/MiniAODPerformanceStudies/basketSize/basketSize_131072
+Finished processing (6/28)
+Now processing (7/28)
+checkMem_basketSize_2048.log
+/build/peerutb/CMSSW_7_4_6/src/MiniAODPerformanceStudies/basketSize/basketSize_2048
+Finished processing (7/28)
+Now processing (8/28)
+Omitting directory "#basketSize/basketSize_2097152/"
+Finished processing (8/28)
+Now processing (9/28)
+checkMem_basketSize_262144.log
+Traceback (most recent call last):
+  File "checkMem.py", line 99, in <module>
+    main(sys.argv[1:])
+  File "checkMem.py", line 67, in main
+    mems.append(float(mem.strip().split()[1]))
+IndexError: list index out of range
+/build/peerutb/CMSSW_7_4_6/src/MiniAODPerformanceStudies/basketSize/basketSize_262144
+Finished processing (9/28)
+Now processing (10/28)
+checkMem_basketSize_32768.log
+/build/peerutb/CMSSW_7_4_6/src/MiniAODPerformanceStudies/basketSize/basketSize_32768
+Finished processing (10/28)
+Now processing (11/28)
+checkMem_basketSize_4096.log
+/build/peerutb/CMSSW_7_4_6/src/MiniAODPerformanceStudies/basketSize/basketSize_4096
+Finished processing (11/28)
+Now processing (12/28)
+checkMem_basketSize_524288.log
+/build/peerutb/CMSSW_7_4_6/src/MiniAODPerformanceStudies/basketSize/basketSize_524288
+Finished processing (12/28)
+Now processing (13/28)
+checkMem_basketSize_65536.log
+/build/peerutb/CMSSW_7_4_6/src/MiniAODPerformanceStudies/basketSize/basketSize_65536
+Finished processing (13/28)
+Now processing (14/28)
+checkMem_basketSize_8192.log
+/build/peerutb/CMSSW_7_4_6/src/MiniAODPerformanceStudies/basketSize/basketSize_8192
+Finished processing (14/28)
+Now processing (15/28)
+checkMem_LZMA2.log
+/build/peerutb/CMSSW_7_4_6/src/MiniAODPerformanceStudies/compressionAlgorLevel/LZMA2
+Finished processing (15/28)
+Now processing (16/28)
+checkMem_LZMA4.log
+/build/peerutb/CMSSW_7_4_6/src/MiniAODPerformanceStudies/compressionAlgorLevel/LZMA4
+Finished processing (16/28)
+Now processing (17/28)
+checkMem_LZMA7.log
+/build/peerutb/CMSSW_7_4_6/src/MiniAODPerformanceStudies/compressionAlgorLevel/LZMA7
+Finished processing (17/28)
+Now processing (18/28)
+checkMem_ZLIB2.log
+/build/peerutb/CMSSW_7_4_6/src/MiniAODPerformanceStudies/compressionAlgorLevel/ZLIB2
+Finished processing (18/28)
+Now processing (19/28)
+checkMem_ZLIB4.log
+/build/peerutb/CMSSW_7_4_6/src/MiniAODPerformanceStudies/compressionAlgorLevel/ZLIB4
+Finished processing (19/28)
+Now processing (20/28)
+checkMem_ZLIB7.log
+/build/peerutb/CMSSW_7_4_6/src/MiniAODPerformanceStudies/compressionAlgorLevel/ZLIB7
+Finished processing (20/28)
+Now processing (21/28)
+Omitting directory "#noOfEvents/10000_samples/"
+Finished processing (21/28)
+Now processing (22/28)
+Omitting directory "#noOfEvents/1000_samples/"
+Finished processing (22/28)
+Now processing (23/28)
+Omitting directory "#noOfEvents/100_samples/"
+Finished processing (23/28)
+Now processing (24/28)
+Omitting directory "#noOfEvents/5000_samples/"
+Finished processing (24/28)
+Now processing (25/28)
+Omitting directory "#noOfEvents/500_samples/"
+Finished processing (25/28)
+Now processing (26/28)
+Omitting directory "#splitLevel/splitLevel0/"
+Finished processing (26/28)
+Now processing (27/28)
+Omitting directory "#splitLevel/splitLevel25/"
+Finished processing (27/28)
+Now processing (28/28)
+Omitting directory "#splitLevel/splitLevel400/"
+Finished processing (28/28)
+End time: Wed Jul 29 05:46:16 CEST 2015
+

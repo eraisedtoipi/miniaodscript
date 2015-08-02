@@ -4,19 +4,29 @@ runSimulation()
 {
 
 NOEVENTS=1000
-if [[ "$1"=~"^[0-9]+$" ]]; then NOEVENTS=$1; fi
 FILENAME="$PARAM=$VALUE"
+if [[ "$1"=~"^[0-9]+$" ]]; then NOEVENTS=$1; fi
+
+# Step1: Measure CPU Ticks
+echo "Profiling CPU Ticks of ${FILENAME}"
 if [[ "$PARAM" == "compression" ]]; then
-	echo
-	#echo "2 params $WORKDIR/outputRootFile/miniaod_${FILENAME}.root"
-	#echo "compressionAlgorithm=${VALUE:0:4} compressionLevel=${VALUE:4}"
-	#igprof -pp -z -o "${FILENAME}.gz" cmsRun myMakeMiniAOD.py maxEvents=$1 "compressionAlgorithm=${FILENAME:0:4}" "compressionLevel=${FILENAME:-1}" outputFile="$WORKDIR/outputRootFile/miniaod_${FILENAME}.root" > "$WORKDIR/log/out_${FILENAME}.log"
+	#igprof -pp -z -o "${FILENAME}.gz" cmsRun myMakeMiniAOD.py maxEvents=$1 "compressionAlgorithm=${VALUE:0:4}" "compressionLevel=${VALUE:4}" outputFile="$WORKDIR/outputRootFile/miniaod_${FILENAME}.root" > "$WORKDIR/log/out_${FILENAME}.log"
 else
-	echo
-	#echo "1 param $WORKDIR/outputRootFile/miniaod_${FILENAME}.root"
 	#igprof -pp -z -o "${FILENAME}.gz" cmsRun myMakeMiniAOD.py maxEvents=$1"${FILENAME}" outputFile="$WORKDIR/outputRootFile/miniaod_${FILENAME}.root" > "$WORKDIR/log/out_${FILENAME}.log"
 fi
-	
+# Step 2: Measure Job Memory 
+echo "Profiling Job Memory of ${FILENAME}"
+if [[ "$PARAM" == "compression" ]]; then
+	cd "$WORKDIR/checkMem"
+	echo "now profilemp2 at $(pwd)"
+	#python checkMem.py -n "$FILENAME" cmsRun myMakeMiniAOD.py maxEvents=$1 "compressionAlgorithm=${VALUE:0:4}" "compressionLevel=${VALUE:4}" outputFile="$WORKDIR/outputRootFile/miniaod_${FILENAME}.root"
+	cd -
+else
+	cd "$WORKDIR/checkMem"
+	echo "now profilemp2 at $(pwd)"
+	#python checkMem.py -n "$FILENAME" cmsRun  myMakeMiniAOD.py maxEvents=$1"${FILENAME}" outputFile="$WORKDIR/outputRootFile/miniaod_${FILENAME}.root"
+	cd -
+fi
 
 }
 

@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 ## 
 # $1 : input file contaning all directory in which makeMiniAOD.py file resides
 # $2 : if specified 'mp', run memory profile; otherwise, run performance profile

@@ -1,41 +1,44 @@
 #!/bin/bash
-
+########### 
+# $1 : number of input events
+#
 runSimulation()
 {
 
 FILENAME="$PARAM=$VALUE"
-NOEVENTS=1000
+NOEVENTS=1
 IGPROFOPTION="$FILENAME"
-if [[ "$1"=~"^[0-9]+$" ]]; then NOEVENTS=$1; fi
-if [[ "$PARAM" == "compression" ]]; then IGPROFOPTION="compressionAlgorithm=${VALUE:0:4} compressionLevel=${VALUE:4}"
+if [[ ! -z "$1" ]] && [[ "$1"=~"^[0-9]+$" ]]; then NOEVENTS=$1; fi
+if [[ "$PARAM" == "compression" ]]; then IGPROFOPTION="compressionAlgorithm=${VALUE:0:4} compressionLevel=${VALUE:4}"; fi
 
+# Step0: Run without Profiling
+#echo "Run ${FILENAME} without profiling ($NOEVENTS events)"
+#cmsRun $WORKDIR/codes/myMakeMiniAOD.py maxEvents=$NOEVENTS $IGPROFOPTION outputFile="$WORKDIR/output_step1/miniaod_${FILENAME}.root" > "$WORKDIR/log/out_${FILENAME}.log"
 
-# Step1: Measure CPU Ticks
-echo "Profiling CPU Ticks of ${FILENAME}"
-#igprof -pp -z -o "$WORKDIR/reports_raw/${FILENAME}.gz" cmsRun myMakeMiniAOD.py maxEvents=$1 "${IGPROFOPTION}" outputFile="$WORKDIR/outputRootFile/miniaod_${FILENAME}.root" > "$WORKDIR/log/out_${FILENAME}.log"
+# Step1.1: Measure CPU Ticks
+echo "Profiling CPU Ticks of ${FILENAME} ($NOEVENTS events)"
+#echo "Option: ${IGPROFOPTION}"
+igprof -pp -z -o "$WORKDIR/reports_raw/${FILENAME}.gz" cmsRun $WORKDIR/codes/myMakeMiniAOD.py maxEvents=$NOEVENTS $IGPROFOPTION outputFile="$WORKDIR/output_step1/miniaod_${FILENAME}.root" > "$WORKDIR/log/out_${FILENAME}.log"
 echo "Analysing"
-#igprof-analyse --sqlite -d -v -g "$WORKDIR/reports_raw/${FILENAME}.gz" | sqlite3 "$WORKDIR/reports_web/${FILENAME}.sql3"
+igprof-analyse -d -v -g "$WORKDIR/reports_raw/${FILENAME}.gz" >& "$WORKDIR/reports_txt/${FILENAME}.txt"
+igprof-analyse --sqlite -d -v -g "$WORKDIR/reports_raw/${FILENAME}.gz" | sqlite3 "$WORKDIR/reports_web/${FILENAME}.sql3"
 echo "Copying report to cgi area"
-#cp "$WORKDIR/reports_web/${FILENAME}.sql3" ~/www/cgi-bin/data/results	
+cp "$WORKDIR/reports_web/${FILENAME}.sql3" ~/www/cgi-bin/data/results	
 
-# Step 2: Measure Job Memory 
-echo "Profiling Job Memory of ${FILENAME}"
+# Step 1.2: Measure Job Memory 
+echo "Profiling Job Memory of ${FILENAME} ($NOEVENTS events)"
 cd "$WORKDIR/checkMem"
 echo "now profilemp2 at $(pwd)"
-python checkMem.py -n "$FILENAME" cmsRun myMakeMiniAOD.py maxEvents=$1 "${IGPROFOPTION}" outputFile="$WORKDIR/outputRootFile/miniaod_${FILENAME}.root"
+python checkMem.py -n "$FILENAME_$NOEVENTS" cmsRun $WORKDIR/codes/myMakeMiniAOD.py maxEvents=$NOEVENTS $IGPROFOPTION outputFile="$WORKDIR/output_step2/miniaod_${FILENAME}.root"
 cd -
 
 }
 
+##### Here begins the script #####
+#
 WORKDIR="/build/peerutb/CMSSW_7_4_6/src/MiniAODPerformanceStudies"
-PARAMS=( "basketSize" "compression" "splitLevel" "eventAutoFlushCompressedSize" "fastCloning" "maxEvents" )
 
-#for i in ${PARAMS[@]}; do
-	#echo $i
-	#while read line; do
-	#	echo $line
-	#done < "$WORKDIR/codes/input/${i}.txt"
-#done
+echo "Start time: $(date)"
 
 PARAM=""
 VALUE=""
@@ -61,3 +64,6 @@ while IFS='' read -r line || [[ -n "$line" ]]; do
 #	echo "line no. $LINECOUNT param=$PARAM"
 #	LINECOUNT=$[$LINECOUNT+1]
 done < "$WORKDIR/codes/input/parameters.txt"
+
+echo "End time: $(date)"
+

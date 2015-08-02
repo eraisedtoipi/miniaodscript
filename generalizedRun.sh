@@ -3,30 +3,27 @@
 runSimulation()
 {
 
-NOEVENTS=1000
 FILENAME="$PARAM=$VALUE"
+NOEVENTS=1000
+IGPROFOPTION="$FILENAME"
 if [[ "$1"=~"^[0-9]+$" ]]; then NOEVENTS=$1; fi
+if [[ "$PARAM" == "compression" ]]; then IGPROFOPTION="compressionAlgorithm=${VALUE:0:4} compressionLevel=${VALUE:4}"
+
 
 # Step1: Measure CPU Ticks
 echo "Profiling CPU Ticks of ${FILENAME}"
-if [[ "$PARAM" == "compression" ]]; then
-	#igprof -pp -z -o "${FILENAME}.gz" cmsRun myMakeMiniAOD.py maxEvents=$1 "compressionAlgorithm=${VALUE:0:4}" "compressionLevel=${VALUE:4}" outputFile="$WORKDIR/outputRootFile/miniaod_${FILENAME}.root" > "$WORKDIR/log/out_${FILENAME}.log"
-else
-	#igprof -pp -z -o "${FILENAME}.gz" cmsRun myMakeMiniAOD.py maxEvents=$1"${FILENAME}" outputFile="$WORKDIR/outputRootFile/miniaod_${FILENAME}.root" > "$WORKDIR/log/out_${FILENAME}.log"
-fi
+#igprof -pp -z -o "$WORKDIR/reports_raw/${FILENAME}.gz" cmsRun myMakeMiniAOD.py maxEvents=$1 "${IGPROFOPTION}" outputFile="$WORKDIR/outputRootFile/miniaod_${FILENAME}.root" > "$WORKDIR/log/out_${FILENAME}.log"
+echo "Analysing"
+#igprof-analyse --sqlite -d -v -g "$WORKDIR/reports_raw/${FILENAME}.gz" | sqlite3 "$WORKDIR/reports_web/${FILENAME}.sql3"
+echo "Copying report to cgi area"
+#cp "$WORKDIR/reports_web/${FILENAME}.sql3" ~/www/cgi-bin/data/results	
+
 # Step 2: Measure Job Memory 
 echo "Profiling Job Memory of ${FILENAME}"
-if [[ "$PARAM" == "compression" ]]; then
-	cd "$WORKDIR/checkMem"
-	echo "now profilemp2 at $(pwd)"
-	#python checkMem.py -n "$FILENAME" cmsRun myMakeMiniAOD.py maxEvents=$1 "compressionAlgorithm=${VALUE:0:4}" "compressionLevel=${VALUE:4}" outputFile="$WORKDIR/outputRootFile/miniaod_${FILENAME}.root"
-	cd -
-else
-	cd "$WORKDIR/checkMem"
-	echo "now profilemp2 at $(pwd)"
-	#python checkMem.py -n "$FILENAME" cmsRun  myMakeMiniAOD.py maxEvents=$1"${FILENAME}" outputFile="$WORKDIR/outputRootFile/miniaod_${FILENAME}.root"
-	cd -
-fi
+cd "$WORKDIR/checkMem"
+echo "now profilemp2 at $(pwd)"
+python checkMem.py -n "$FILENAME" cmsRun myMakeMiniAOD.py maxEvents=$1 "${IGPROFOPTION}" outputFile="$WORKDIR/outputRootFile/miniaod_${FILENAME}.root"
+cd -
 
 }
 
